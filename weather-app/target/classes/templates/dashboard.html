@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>weather-app</title>
+  </head>
+  <body class="bg-cover bg-center bg-no-repeat min-h-screen">
+    <!--style="background-image: url('/images/bg.jpg');-->
+
+    <div th:replace="~{navbar :: navbar}"></div>
+
+    <!--  Search Button and TextField  -->
+    <form
+      class="max-w-md mx-auto mt-10"
+      th:action="@{/getWeather}"
+      method="post"
+    >
+      <label
+        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+        >City</label
+      >
+      <div class="relative">
+        <div
+          class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+        >
+          <svg
+            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+            />
+          </svg>
+        </div>
+        <input
+          type="search"
+          id="city"
+          name="city"
+          class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Enter city name"
+          required
+        />
+        <button
+          type="submit"
+          class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+
+    <!-- show error if city not found -->
+    <div class="max-w-md mx-auto mt-5" th:if="${error}">
+      <div
+        class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+        role="alert"
+      >
+        <strong class="font-bold">Error!</strong>
+        <span class="block sm:inline" th:text="${error}"></span>
+      </div>
+    </div>
+
+    <!-- Weather Data Display -->
+    <div class="max-w-md mx-auto mt-10 text-center" th:if="${city}">
+      <h2 class="text-2xl font-bold">
+        Weather in <span th:text="${city}">City Name</span>
+      </h2>
+      
+      
+      
+    </div>
+
+
+      <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+          <div class="grid max-w-md grid-cols-1 gap-6 mx-auto mt-8 lg:mt-16 lg:grid-cols-3 lg:max-w-full lg:gap-14">
+              <div class="flex flex-col overflow-hidden bg-white shadow-md rounded-xl">
+                  <div class="flex flex-col justify-between flex-1 px-5 py-6">
+                      <div class="flex-shrink-0">
+                          <span class="block text-xs font-semibold tracking-widest text-orange-500 uppercase"> Temperature </span>
+                      </div>
+  
+                      <div class="flex-1 mt-28">
+                        <p class="text-pretty" th:if="${temperature != null}">
+                          Temperature: <span th:text="${temperature}">Temperature</span> °C
+                        </p>
+                      </div>
+                  </div>
+              </div>
+  
+              <div class="flex flex-col overflow-hidden bg-white shadow-md rounded-xl">
+                  <div class="flex flex-col justify-between flex-1 px-5 py-6">
+                      <div class="flex-shrink-0">
+                          <span class="block text-xs font-semibold tracking-widest text-orange-500 uppercase"> Humidity </span>
+                      </div>
+  
+                      <div class="flex-1 mt-28">
+                        <p th:if="${humidity != null}">
+                          Humidity: <span th:text="${humidity}">Humidity</span> %
+                        </p>
+                      </div>
+                  </div>
+              </div>
+  
+              <div class="flex flex-col overflow-hidden bg-white shadow-md rounded-xl">
+                  <div class="flex flex-col justify-between flex-1 px-5 py-6">
+                      <div class="flex-shrink-0">
+                          <span class="block text-xs font-semibold tracking-widest text-orange-500 uppercase"> Wind Speed </span>
+                      </div>
+  
+                      <div class="flex-1 mt-28">
+                        <p th:if="${windSpeed != null}">
+                          Wind Speed: <span th:text="${windSpeed}">Wind Speed</span> m/s
+                        </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+    
+      <div th:replace="~{footer :: footer}"></div>
+    <!--  DaisyUI and Flowbite CDN  -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+  </body>
+</html>
